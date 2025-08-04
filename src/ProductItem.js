@@ -8,9 +8,10 @@ import './ProductItem.css';
 /**
  * ProductItem component representing a single product
  * Includes product details and Add to Cart functionality
+ * Optimized with React.memo to prevent unnecessary re-renders
  * @param {object} product - Product data object
  */
-const ProductItem = ({ product }) => {
+const ProductItem = React.memo(({ product }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
@@ -70,6 +71,6 @@ const ProductItem = ({ product }) => {
       </div>
     </div>
   );
-};
+});
 
 export default ProductItem;
