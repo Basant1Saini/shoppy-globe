@@ -57,10 +57,19 @@
   margin: 0 auto 1rem auto;
   color: #7f8c8d;
   font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .results-info p {
   margin: 0;
+}
+
+.filter-indicator {
+  color: #3498db;
+  font-weight: 500;
+  font-size: 0.85rem;
 }
 
 .product-list {
@@ -93,9 +102,16 @@
   margin-bottom: 1.5rem;
 }
 
-.clear-search-btn {
+.clear-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.clear-search-btn,
+.clear-filters-btn {
   padding: 0.8rem 1.5rem;
-  background-color: #3498db;
   color: white;
   border: none;
   border-radius: 6px;
@@ -104,8 +120,20 @@
   transition: background-color 0.3s ease;
 }
 
+.clear-search-btn {
+  background-color: #3498db;
+}
+
 .clear-search-btn:hover {
   background-color: #2980b9;
+}
+
+.clear-filters-btn {
+  background-color: #e74c3c;
+}
+
+.clear-filters-btn:hover {
+  background-color: #c0392b;
 }
 
 .loading-container,
