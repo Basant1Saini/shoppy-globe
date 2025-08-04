@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { convertProductsToIndian } from '../utils/currency';
+import { filterVegetarianProducts, addVegIndicator } from '../utils/vegFilter';
 
 /**
  * Custom hook for fetching Indian products with INR pricing
@@ -36,8 +37,14 @@ const useIndianProducts = (url) => {
           products = [result];
         }
         
+        // Filter out non-vegetarian items using comprehensive filter
+        const vegProducts = filterVegetarianProducts(products);
+        
+        // Add vegetarian indicators to products
+        const productsWithVegInfo = vegProducts.map(addVegIndicator);
+
         // Convert to Indian products with INR pricing
-        const indianProducts = convertProductsToIndian(products);
+        const indianProducts = convertProductsToIndian(productsWithVegInfo);
         
         setData(indianProducts);
       } catch (err) {

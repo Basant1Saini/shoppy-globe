@@ -91,6 +91,23 @@
   font-size: 1rem;
   color: #7f8c8d;
   margin-bottom: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.veg-badge {
+  background-color: #27ae60;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: help;
 }
 
 .product-description {

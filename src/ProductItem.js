@@ -38,7 +38,14 @@ const ProductItem = ({ product }) => {
         </p>
         
         <div className="product-details">
-          <p className="product-price">{formatIndianPrice(product.price)}</p>
+          <div className="price-and-veg">
+            <p className="product-price">{formatIndianPrice(product.price)}</p>
+            {product.isVegetarian && (
+              <span className="veg-indicator" title="Vegetarian Product">
+                🌱
+              </span>
+            )}
+          </div>
           {product.rating && (
             <p className="product-rating">
               ⭐ {product.rating}

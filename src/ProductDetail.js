@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToCart } from './redux/cartSlice';
 import { convertToIndianProduct, formatIndianPrice } from './utils/currency';
+import { isVegetarian, addVegIndicator } from './utils/vegFilter';
 import './ProductDetail.css';
 
 /**
@@ -29,8 +30,15 @@ const ProductDetail = () => {
           throw new Error('Product not found');
         }
         const data = await response.json();
-        // Convert to Indian product with INR pricing
-        const indianProduct = convertToIndianProduct(data);
+        
+        // Check if product is vegetarian
+        if (!isVegetarian(data)) {
+          throw new Error('This product is not available (non-vegetarian item)');
+        }
+        
+        // Add vegetarian indicator and convert to Indian product with INR pricing
+        const productWithVegInfo = addVegIndicator(data);
+        const indianProduct = convertToIndianProduct(productWithVegInfo);
         setProduct(indianProduct);
       } catch (error) {
         setError(error);
@@ -127,6 +135,11 @@ const ProductDetail = () => {
             <div className="product-meta">
               <span className="product-brand">{product.brand}</span>
               <span className="product-category">{product.category}</span>
+              {product.isVegetarian && (
+                <span className="veg-badge" title="100% Vegetarian Product">
+                  🌱 Vegetarian
+                </span>
+              )}
             </div>
 
             {product.rating && (

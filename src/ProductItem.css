@@ -63,6 +63,25 @@
   margin-bottom: 1rem;
 }
 
+.price-and-veg {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.veg-indicator {
+  font-size: 1.2rem;
+  color: #27ae60;
+  background-color: #e8f5e8;
+  padding: 0.2rem 0.4rem;
+  border-radius: 50%;
+  border: 2px solid #27ae60;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+}
+
 .product-price {
   font-size: 1.2rem;
   font-weight: bold;
