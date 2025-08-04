@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToCart } from './redux/cartSlice';
+import { convertToIndianProduct, formatIndianPrice } from './utils/currency';
 import './ProductDetail.css';
 
 /**
@@ -28,7 +29,9 @@ const ProductDetail = () => {
           throw new Error('Product not found');
         }
         const data = await response.json();
-        setProduct(data);
+        // Convert to Indian product with INR pricing
+        const indianProduct = convertToIndianProduct(data);
+        setProduct(indianProduct);
       } catch (error) {
         setError(error);
         console.error('Error fetching product:', error);
@@ -136,11 +139,11 @@ const ProductDetail = () => {
             <p className="product-description">{product.description}</p>
 
             <div className="product-pricing">
-              <span className="current-price">${product.price}</span>
+              <span className="current-price">{formatIndianPrice(product.price)}</span>
               {product.discountPercentage && (
                 <>
                   <span className="original-price">
-                    ${(product.price / (1 - product.discountPercentage / 100)).toFixed(2)}
+                    {formatIndianPrice(Math.round(product.price / (1 - product.discountPercentage / 100)))}
                   </span>
                   <span className="discount">{product.discountPercentage}% off</span>
                 </>

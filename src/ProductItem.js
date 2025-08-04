@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addToCart } from './redux/cartSlice';
+import { formatIndianPrice } from './utils/currency';
 import './ProductItem.css';
 
 /**
@@ -37,7 +38,7 @@ const ProductItem = ({ product }) => {
         </p>
         
         <div className="product-details">
-          <p className="product-price">${product.price}</p>
+          <p className="product-price">{formatIndianPrice(product.price)}</p>
           {product.rating && (
             <p className="product-rating">
               ⭐ {product.rating}

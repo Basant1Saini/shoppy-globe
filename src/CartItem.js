@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { removeFromCart, updateQuantity } from './redux/cartSlice';
+import { formatIndianPrice } from './utils/currency';
 import './CartItem.css';
 
 /**
@@ -23,7 +24,7 @@ const CartItem = ({ item }) => {
     }
   };
 
-  const totalPrice = (item.price * item.quantity).toFixed(2);
+  const totalPrice = item.price * item.quantity;
 
   return (
     <div className="cart-item">
@@ -39,7 +40,7 @@ const CartItem = ({ item }) => {
       
       <div className="item-details">
         <h4 className="item-title">{item.title}</h4>
-        <p className="item-price">${item.price}</p>
+        <p className="item-price">{formatIndianPrice(item.price)}</p>
         {item.brand && (
           <p className="item-brand">{item.brand}</p>
         )}
@@ -63,7 +64,7 @@ const CartItem = ({ item }) => {
       </div>
       
       <div className="item-total">
-        <p className="total-price">${totalPrice}</p>
+        <p className="total-price">{formatIndianPrice(totalPrice)}</p>
         <button onClick={handleRemoveFromCart} className="remove-btn">
           Remove
         </button>

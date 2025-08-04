@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem';
 import { clearCart, selectCartTotal, selectCartItemCount } from './redux/cartSlice';
+import { formatIndianPrice } from './utils/currency';
 import './Cart.css';
 
 /**
@@ -67,7 +68,7 @@ const Cart = () => {
             
             <div className="summary-line">
               <span>Subtotal ({itemCount} items)</span>
-              <span>${cartTotal.toFixed(2)}</span>
+              <span>{formatIndianPrice(cartTotal)}</span>
             </div>
             
             <div className="summary-line">
@@ -76,15 +77,15 @@ const Cart = () => {
             </div>
             
             <div className="summary-line">
-              <span>Tax</span>
-              <span>${(cartTotal * 0.08).toFixed(2)}</span>
+              <span>Tax (GST 18%)</span>
+              <span>{formatIndianPrice(Math.round(cartTotal * 0.18))}</span>
             </div>
             
             <hr className="summary-divider" />
             
             <div className="summary-line total-line">
               <span>Total</span>
-              <span>${(cartTotal * 1.08).toFixed(2)}</span>
+              <span>{formatIndianPrice(Math.round(cartTotal * 1.18))}</span>
             </div>
             
             <button onClick={handleCheckout} className="checkout-btn">

@@ -1,15 +1,15 @@
 import React, { useState, useMemo } from 'react';
-import useFetch from './useFetch';
+import useIndianProducts from './hooks/useIndianProducts';
 import ProductItem from './ProductItem';
 import './ProductList.css';
 
 /**
- * ProductList component for displaying and searching products
+ * ProductList component for displaying and searching Indian products
  * Implements search functionality to filter products
- * Uses custom hook for data fetching with error handling
+ * Uses custom hook for fetching products with INR pricing
  */
 const ProductList = () => {
-  const { data: products, loading, error } = useFetch('https://dummyjson.com/products');
+  const { data: products, loading, error } = useIndianProducts('https://dummyjson.com/products');
   const [searchTerm, setSearchTerm] = useState('');
 
   // Filter products based on search term
