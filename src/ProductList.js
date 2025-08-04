@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import useIndianProducts from './hooks/useIndianProducts';
 import useDebounce from './hooks/useDebounce';
 import ProductItem from './ProductItem';
+import LoadingSkeleton from './components/LoadingSkeleton';
 import './ProductList.css';
 
 /**
@@ -28,9 +29,20 @@ const ProductList = () => {
 
   if (loading) {
     return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
-        <p>Loading products...</p>
+      <div className="product-list-container">
+        <div className="product-list-header">
+          <h1>Our Products</h1>
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Search products..."
+              disabled
+              className="search-input"
+            />
+            <span className="search-icon">🔍</span>
+          </div>
+        </div>
+        <LoadingSkeleton count={8} type="product" />
       </div>
     );
   }

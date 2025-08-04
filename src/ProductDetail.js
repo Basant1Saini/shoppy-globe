@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from './redux/cartSlice';
 import { convertToIndianProduct, formatIndianPrice } from './utils/currency';
 import { isVegetarian, addVegIndicator } from './utils/vegFilter';
+import LoadingSkeleton from './components/LoadingSkeleton';
 import './ProductDetail.css';
 
 /**
@@ -58,12 +59,7 @@ const ProductDetail = () => {
   };
 
   if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
-        <p>Loading product details...</p>
-      </div>
-    );
+    return <LoadingSkeleton count={1} type="detail" />;
   }
   
   if (error) {
