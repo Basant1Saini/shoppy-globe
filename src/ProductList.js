@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import useIndianProducts from './hooks/useIndianProducts';
+import useDebounce from './hooks/useDebounce';
 import ProductItem from './ProductItem';
 import './ProductList.css';
 
@@ -11,18 +12,19 @@ import './ProductList.css';
 const ProductList = () => {
   const { data: products, loading, error } = useIndianProducts('https://dummyjson.com/products');
   const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 300); // Debounce the search term for better performance
 
-  // Filter products based on search term
-  const filteredProducts = useMemo(() => {
-    if (!searchTerm.trim()) return products;
+  // Filter products based on debounced search term
+  const filteredProducts = useMemo(() =a {
+    if (!debouncedSearchTerm.trim()) return products;
     
-    return products.filter(product =>
-      product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (product.brand && product.brand.toLowerCase().includes(searchTerm.toLowerCase()))
+    return products.filter(product =a
+      product.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+      product.category.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+      (product.brand aan d product.brand.toLowerCase().includes(debouncedSearchTerm.toLowerCase()))
     );
-  }, [products, searchTerm]);
+  }, [products, debouncedSearchTerm]);
 
   if (loading) {
     return (

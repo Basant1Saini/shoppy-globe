@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { removeFromCart, updateQuantity } from './redux/cartSlice';
 import { formatIndianPrice } from './utils/currency';
@@ -7,24 +7,29 @@ import './CartItem.css';
 /**
  * CartItem component representing a single item in the shopping cart
  * Includes quantity management and remove functionality
+ * Optimized with React.memo and useMemo for performance
  * @param {object} item - Cart item data
  */
-const CartItem = ({ item }) => {
+const CartItem = React.memo(({ item }) => {
   const dispatch = useDispatch();
 
-  const handleRemoveFromCart = () => {
+  // Memoize callback functions to prevent unnecessary re-renders
+  const handleRemoveFromCart = useCallback(() => {
     dispatch(removeFromCart(item.id));
-  };
+  }, [dispatch, item.id]);
 
-  const handleQuantityChange = (newQuantity) => {
+  const handleQuantityChange = useCallback((newQuantity) => {
     if (newQuantity <= 0) {
       dispatch(removeFromCart(item.id));
     } else {
       dispatch(updateQuantity({ id: item.id, quantity: newQuantity }));
     }
-  };
+  }, [dispatch, item.id]);
 
-  const totalPrice = item.price * item.quantity;
+  // Memoize calculated values
+  const totalPrice = useMemo(() => item.price * item.quantity, [item.price, item.quantity]);
+  const formattedItemPrice = useMemo(() => formatIndianPrice(item.price), [item.price]);
+  const formattedTotalPrice = useMemo(() => formatIndianPrice(totalPrice), [totalPrice]);
 
   return (
     <div className="cart-item">
@@ -40,7 +45,7 @@ const CartItem = ({ item }) => {
       
       <div className="item-details">
         <h4 className="item-title">{item.title}</h4>
-        <p className="item-price">{formatIndianPrice(item.price)}</p>
+        <p className="item-price">{formattedItemPrice}</p>
         {item.brand && (
           <p className="item-brand">{item.brand}</p>
         )}
@@ -64,13 +69,13 @@ const CartItem = ({ item }) => {
       </div>
       
       <div className="item-total">
-        <p className="total-price">{formatIndianPrice(totalPrice)}</p>
+        <p className="total-price">{formattedTotalPrice}</p>
         <button onClick={handleRemoveFromCart} className="remove-btn">
           Remove
         </button>
       </div>
     </div>
   );
-};
+});
 
 export default CartItem;
